@@ -2,7 +2,7 @@
 
 Simple class which adds Safari like toolbar to keyboard and handles switching between input fields.
 
-<img src="https://raw.githubusercontent.com/jcavar/PNTToolbar/master/preview.gif" alt="preview" style="width: 200px;height: 400px;"/>
+<img src="https://raw.githubusercontent.com/jcavar/PNTToolbar/master/preview.gif" alt="preview" style="width: 100px;height: 100px;"/>
 ![alt preview](https://raw.githubusercontent.com/jcavar/PNTToolbar/master/preview.gif =200x400)
 
 ##Usage
