@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "PNTToolbar"
-  s.version      = "0.1.1"
+  s.version      = "0.1.2"
   s.summary      = "Simple class which adds Safari like toolbar to input view and handles switching between input fields."
 
   s.homepage     = "https://github.com/Planet1107/PNTToolbar"
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "6.0"
   s.ios.deployment_target = "6.0"
 
-  s.source       = { :git => "https://github.com/Planet1107/PNTToolbar.git", :tag => "0.1.1" }
+  s.source       = { :git => "https://github.com/Planet1107/PNTToolbar.git", :tag => "0.1.2" }
   s.source_files  = "PNTToolbar"
 
   s.requires_arc = true
