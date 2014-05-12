@@ -152,7 +152,7 @@
     }
     [self scrollRectToVisible:textField.frame animated:YES];
 
-    int index = [self.textFields indexOfObject:textField];
+    NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
         [self.delegates[index] textFieldDidBeginEditing:textField];
     }
@@ -160,7 +160,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
-    int index = [self.textFields indexOfObject:textField];
+    NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldDidEndEditing:)]) {
         [self.delegates[index] textFieldDidEndEditing:textField];
     }
@@ -168,7 +168,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    int index = [self.textFields indexOfObject:textField];
+    NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
         return [self.delegates[index] textField:textField shouldChangeCharactersInRange:range replacementString:string];
     } else {
@@ -178,7 +178,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
-    int index = [self.textFields indexOfObject:textField];
+    NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldShouldBeginEditing:)]) {
         return [self.delegates[index] textFieldShouldBeginEditing:textField];
     } else {
@@ -188,7 +188,7 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     
-    int index = [self.textFields indexOfObject:textField];
+    NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldShouldEndEditing:)]) {
         return [self.delegates[index] textFieldShouldEndEditing:textField];
     } else {
@@ -198,7 +198,7 @@
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
     
-    int index = [self.textFields indexOfObject:textField];
+    NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldShouldClear:)]) {
         return [self.delegates[index] textFieldShouldClear:textField];
     } else {
@@ -209,7 +209,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
-    int index = [self.textFields indexOfObject:textField];
+    NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldShouldReturn:)]) {
         return [self.delegates[index] textFieldShouldReturn:textField];
     } else {
@@ -226,7 +226,7 @@
     }
     [self scrollRectToVisible:textView.frame animated:YES];
 
-    int index = [self.textFields indexOfObject:textView];
+    NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewDidBeginEditing:)]) {
         [self.delegates[index] textViewDidBeginEditing:textView];
     }
@@ -235,7 +235,7 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
     
-    int index = [self.textFields indexOfObject:textView];
+    NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewDidChange:)]) {
         [self.delegates[index] textViewDidChange:textView];
     }
@@ -244,7 +244,7 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     
-    int index = [self.textFields indexOfObject:textView];
+    NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewShouldBeginEditing:)]) {
         return [self.delegates[index] textViewShouldBeginEditing:textView];
     } else {
@@ -254,7 +254,7 @@
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     
-    int index = [self.textFields indexOfObject:textView];
+    NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewShouldEndEditing:)]) {
         return [self.delegates[index] textViewShouldEndEditing:textView];
     } else {
@@ -264,7 +264,7 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     
-    int index = [self.textFields indexOfObject:textView];
+    NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewDidEndEditing:)]) {
         [self.delegates[index] textViewDidEndEditing:textView];
     }
@@ -272,7 +272,7 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
-    int index = [self.textFields indexOfObject:textView];
+    NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textView:shouldChangeTextInRange:replacementText:)]) {
         return [self.delegates[index] textView:textView shouldChangeTextInRange:range replacementText:text];
     } else {
@@ -282,7 +282,7 @@
 
 - (void)textViewDidChangeSelection:(UITextView *)textView {
     
-    int index = [self.textFields indexOfObject:textView];
+    NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewDidChangeSelection:)]) {
         [self.delegates[index] textViewDidChangeSelection:textView];
     }
