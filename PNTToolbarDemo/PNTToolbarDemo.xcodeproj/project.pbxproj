@@ -13,10 +13,10 @@
 		C7A78AE5183E600E008FCAB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7A78AE3183E600E008FCAB9 /* InfoPlist.strings */; };
 		C7A78AE7183E600E008FCAB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A78AE6183E600E008FCAB9 /* main.m */; };
 		C7A78AED183E600E008FCAB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7A78AEC183E600E008FCAB9 /* Images.xcassets */; };
-		C7A78B0C183E6031008FCAB9 /* PNTToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A78B0B183E6031008FCAB9 /* PNTToolbar.m */; };
 		C7A78B11183E606E008FCAB9 /* PNTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A78B0F183E606E008FCAB9 /* PNTAppDelegate.m */; };
 		C7A78B15183E6090008FCAB9 /* PNTHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A78B13183E6090008FCAB9 /* PNTHomeViewController.m */; };
 		C7A78B16183E6090008FCAB9 /* PNTHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7A78B14183E6090008FCAB9 /* PNTHomeViewController.xib */; };
+		C7E7DFCD1920D7AF0067775E /* PNTToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E7DFCC1920D7AF0067775E /* PNTToolbar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,13 +30,13 @@
 		C7A78AE8183E600E008FCAB9 /* PNTToolbarDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PNTToolbarDemo-Prefix.pch"; sourceTree = "<group>"; };
 		C7A78AEC183E600E008FCAB9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C7A78AF3183E600E008FCAB9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		C7A78B0A183E6031008FCAB9 /* PNTToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNTToolbar.h; sourceTree = "<group>"; };
-		C7A78B0B183E6031008FCAB9 /* PNTToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNTToolbar.m; sourceTree = "<group>"; };
 		C7A78B0E183E606E008FCAB9 /* PNTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNTAppDelegate.h; sourceTree = "<group>"; };
 		C7A78B0F183E606E008FCAB9 /* PNTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNTAppDelegate.m; sourceTree = "<group>"; };
 		C7A78B12183E6090008FCAB9 /* PNTHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNTHomeViewController.h; sourceTree = "<group>"; };
 		C7A78B13183E6090008FCAB9 /* PNTHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNTHomeViewController.m; sourceTree = "<group>"; };
 		C7A78B14183E6090008FCAB9 /* PNTHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNTHomeViewController.xib; sourceTree = "<group>"; };
+		C7E7DFCB1920D7AF0067775E /* PNTToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNTToolbar.h; sourceTree = "<group>"; };
+		C7E7DFCC1920D7AF0067775E /* PNTToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNTToolbar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,7 @@
 			children = (
 				C7A78B0D183E606E008FCAB9 /* AppDelegate */,
 				C7A78B10183E606E008FCAB9 /* ViewController */,
-				C7A78B09183E6031008FCAB9 /* PNTToolbar */,
+				C7E7DFCA1920D7AF0067775E /* PNTToolbar */,
 				C7A78AEC183E600E008FCAB9 /* Images.xcassets */,
 				C7A78AE1183E600E008FCAB9 /* Supporting Files */,
 			);
@@ -102,15 +102,6 @@
 				C7A78AE8183E600E008FCAB9 /* PNTToolbarDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C7A78B09183E6031008FCAB9 /* PNTToolbar */ = {
-			isa = PBXGroup;
-			children = (
-				C7A78B0A183E6031008FCAB9 /* PNTToolbar.h */,
-				C7A78B0B183E6031008FCAB9 /* PNTToolbar.m */,
-			);
-			path = PNTToolbar;
 			sourceTree = "<group>";
 		};
 		C7A78B0D183E606E008FCAB9 /* AppDelegate */ = {
@@ -130,6 +121,16 @@
 				C7A78B14183E6090008FCAB9 /* PNTHomeViewController.xib */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		C7E7DFCA1920D7AF0067775E /* PNTToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				C7E7DFCB1920D7AF0067775E /* PNTToolbar.h */,
+				C7E7DFCC1920D7AF0067775E /* PNTToolbar.m */,
+			);
+			name = PNTToolbar;
+			path = ../../PNTToolbar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,10 +198,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7E7DFCD1920D7AF0067775E /* PNTToolbar.m in Sources */,
 				C7A78B15183E6090008FCAB9 /* PNTHomeViewController.m in Sources */,
 				C7A78AE7183E600E008FCAB9 /* main.m in Sources */,
 				C7A78B11183E606E008FCAB9 /* PNTAppDelegate.m in Sources */,
-				C7A78B0C183E6031008FCAB9 /* PNTToolbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +298,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PNTToolbarDemo/PNTToolbarDemo-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = "PNTToolbarDemo/PNTToolbarDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -310,6 +315,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PNTToolbarDemo/PNTToolbarDemo-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = "PNTToolbarDemo/PNTToolbarDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
