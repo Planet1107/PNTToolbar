@@ -6,6 +6,19 @@
 
 #import "PNTToolbar.h"
 
+@interface PNTToolbar ()
+
+@property (assign, nonatomic) BOOL shouldReturnActivated;
+@property (assign, getter = isKeyboardVisible) BOOL keyboardVisible;
+
+@property (strong, nonatomic) UIBarButtonItem *previousButton;
+@property (strong, nonatomic) UIBarButtonItem *nextButton;
+@property (strong, nonatomic) UIBarButtonItem *doneButton;
+@property (assign, nonatomic) CGRect mainScrollViewInitialFrame;
+@property (assign, nonatomic) CGSize keyboardSize;
+
+@end
+
 @implementation PNTToolbar
 
 #pragma mark - Object lifecycle
@@ -14,14 +27,14 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        previousButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Previous",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(previousField:)] ;
-        nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(nextField:)];
+        _previousButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Previous",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(previousField:)] ;
+        _nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(nextField:)];
         UIBarButtonItem *spaceBetweenButtons = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resignKeyboard:)];
-        if (self.hidePrevNextButtons) {
-            [self setItems:[NSArray arrayWithObjects:spaceBetweenButtons, doneButton, nil] ];
+        _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resignKeyboard:)];
+        if (self.shouldHideNavigationButtons) {
+            [self setItems:[NSArray arrayWithObjects:spaceBetweenButtons, _doneButton, nil] ];
         } else {
-            [self setItems:[NSArray arrayWithObjects:previousButton, nextButton, spaceBetweenButtons, doneButton, nil] ];
+            [self setItems:[NSArray arrayWithObjects:_previousButton, _nextButton, spaceBetweenButtons, _doneButton, nil] ];
         }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     }
@@ -78,19 +91,18 @@
 
 - (void)keyboardDidShow:(NSNotification *)notification {
     
-    if (!self.keyboardVisible) {
-        self.keyboardVisible = YES;
-    }
+    self.keyboardVisible = YES;
+    self.shouldReturnActivated = NO;
     NSDictionary* info = notification.userInfo;
-    keyboardSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    self.keyboardSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
     
     int windowHeight = self.mainScrollView.window.frame.size.height;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         windowHeight = self.mainScrollView.window.frame.size.width;
-        keyboardSize = CGSizeMake(keyboardSize.height, keyboardSize.width);
+        self.keyboardSize = CGSizeMake(self.keyboardSize.height, self.keyboardSize.width);
     }
-    CGPoint keyboardInViewPoint = [self.mainScrollView.superview convertPoint:CGPointMake(0, windowHeight - keyboardSize.height) fromView:nil];
+    CGPoint keyboardInViewPoint = [self.mainScrollView.superview convertPoint:CGPointMake(0, windowHeight - self.keyboardSize.height) fromView:nil];
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         keyboardInViewPoint = CGPointMake(keyboardInViewPoint.y, self.mainScrollView.window.frame.size.height - keyboardInViewPoint.x);
     }
@@ -114,7 +126,7 @@
 - (void)keyboardWillHide:(NSNotification *)notification {
     
     [UIView animateWithDuration:KEYBOARD_ANIMATION_DURATION animations:^{
-        self.mainScrollView.frame = mainScrollViewInitialFrame;
+        self.mainScrollView.frame = self.mainScrollViewInitialFrame;
     } ];
     self.keyboardVisible = NO;
 }
@@ -148,7 +160,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
     if (!self.keyboardVisible) {
-        mainScrollViewInitialFrame = self.mainScrollView.frame;
+        self.mainScrollViewInitialFrame = self.mainScrollView.frame;
     }
     [self scrollRectToVisible:textField.frame animated:YES];
 
@@ -188,12 +200,18 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     
+    BOOL shouldEndEditing = NO;
     NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldShouldEndEditing:)]) {
-        return [self.delegates[index] textFieldShouldEndEditing:textField];
+        shouldEndEditing = [self.delegates[index] textFieldShouldEndEditing:textField];
     } else {
-        return YES;
+        shouldEndEditing = YES;
     }
+    if (self.shouldReturnActivated && shouldEndEditing) {
+        [self keyboardWillHide:nil];
+    }
+    self.shouldReturnActivated = NO;
+    return shouldEndEditing;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
@@ -208,21 +226,24 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
-    [textField resignFirstResponder];
     NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldShouldReturn:)]) {
-        return [self.delegates[index] textFieldShouldReturn:textField];
+        self.shouldReturnActivated = [self.delegates[index] textFieldShouldReturn:textField];
+        return self.shouldReturnActivated;
     } else {
-        return YES;
+        self.shouldReturnActivated = YES;
+        [textField resignFirstResponder];
+        return self.shouldReturnActivated;
     }
 }
+
 
 #pragma mark - UITextViewDelegate methods
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     
     if (!self.keyboardVisible) {
-        mainScrollViewInitialFrame = self.mainScrollView.frame;
+        self.mainScrollViewInitialFrame = self.mainScrollView.frame;
     }
     [self scrollRectToVisible:textView.frame animated:YES];
 
@@ -254,12 +275,20 @@
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     
+    BOOL shouldEndEditing = NO;
     NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewShouldEndEditing:)]) {
-        return [self.delegates[index] textViewShouldEndEditing:textView];
+        shouldEndEditing = [self.delegates[index] textViewShouldEndEditing:textView];
     } else {
-        return YES;
+        shouldEndEditing = YES;
     }
+    /*
+    if (self.shouldReturnActivated && shouldEndEditing) {
+        [self keyboardWillHide:nil];
+    }
+    self.shouldReturnActivated = NO;
+     */
+    return shouldEndEditing;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
@@ -300,9 +329,9 @@
     int windowHeight = self.mainScrollView.window.frame.size.height;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         windowHeight = self.mainScrollView.window.frame.size.width;
-        keyboardSize = CGSizeMake(keyboardSize.height, keyboardSize.width);
+        self.keyboardSize = CGSizeMake(self.keyboardSize.height, self.keyboardSize.width);
     }
-    CGPoint keyboardInViewPoint = [self.mainScrollView.superview convertPoint:CGPointMake(0, windowHeight - keyboardSize.height) fromView:nil];
+    CGPoint keyboardInViewPoint = [self.mainScrollView.superview convertPoint:CGPointMake(0, windowHeight - self.keyboardSize.height) fromView:nil];
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         keyboardInViewPoint = CGPointMake(keyboardInViewPoint.y, self.mainScrollView.window.frame.size.height - keyboardInViewPoint.x);
     }
