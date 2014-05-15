@@ -13,18 +13,13 @@
 
 @interface PNTToolbar : UIToolbar <UITextFieldDelegate> {
     
-    UIBarButtonItem *previousButton;
-    UIBarButtonItem *nextButton;
-    UIBarButtonItem *doneButton;
-    CGRect mainScrollViewInitialFrame;
-    CGSize keyboardSize;
+
 }
 
 @property (strong, nonatomic) UIScrollView* mainScrollView;
-@property (assign, getter = isKeyboardVisible) BOOL keyboardVisible;
 @property (strong, nonatomic) NSArray *textFields;
-@property (strong, nonatomic) NSArray* delegates;
-@property (assign, nonatomic) BOOL hidePrevNextButtons;
+@property (strong, nonatomic) NSArray *delegates;
+@property (assign, nonatomic) BOOL shouldHideNavigationButtons;
 
 + (PNTToolbar *)defaultToolbar;
 
