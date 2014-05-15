@@ -11,10 +11,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PNTToolbar : UIToolbar <UITextFieldDelegate> {
-    
-
-}
+@interface PNTToolbar : UIToolbar
 
 @property (strong, nonatomic) UIScrollView* mainScrollView;
 @property (strong, nonatomic) NSArray *textFields;

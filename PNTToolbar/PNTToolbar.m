@@ -6,7 +6,7 @@
 
 #import "PNTToolbar.h"
 
-@interface PNTToolbar ()
+@interface PNTToolbar () <UITextFieldDelegate>
 
 @property (assign, nonatomic) BOOL shouldReturnActivated;
 @property (assign, getter = isKeyboardVisible) BOOL keyboardVisible;
