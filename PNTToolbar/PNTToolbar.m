@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIBarButtonItem *nextButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (assign, nonatomic) CGRect mainScrollViewInitialFrame;
+@property (assign, nonatomic) CGPoint mainScrollViewInitialOffset;
 @property (assign, nonatomic) CGSize keyboardSize;
 
 @end
@@ -106,7 +107,7 @@
     }
     CGRect scrollViewFrame = self.mainScrollView.frame;
     scrollViewFrame.size.height = keyboardInViewPoint.y - CGRectGetMinY(scrollViewFrame);
-    [UIView animateWithDuration:KEYBOARD_ANIMATION_DURATION animations:^{
+    [UIView animateWithDuration:0 animations:^{
         self.mainScrollView.frame = scrollViewFrame;
     } completion:^(BOOL finished) {
         UITextField *textField = nil;
@@ -125,6 +126,7 @@
     
     [UIView animateWithDuration:KEYBOARD_ANIMATION_DURATION animations:^{
         self.mainScrollView.frame = self.mainScrollViewInitialFrame;
+        self.mainScrollView.contentOffset = self.mainScrollViewInitialOffset;
     } ];
     self.keyboardVisible = NO;
 }
@@ -159,6 +161,7 @@
     
     if (!self.keyboardVisible) {
         self.mainScrollViewInitialFrame = self.mainScrollView.frame;
+        self.mainScrollViewInitialOffset = self.mainScrollView.contentOffset;
     }
     [self scrollRectToVisible:textField.frame animated:YES];
 
@@ -242,6 +245,7 @@
     
     if (!self.keyboardVisible) {
         self.mainScrollViewInitialFrame = self.mainScrollView.frame;
+        self.mainScrollViewInitialOffset = self.mainScrollView.contentOffset;
     }
     [self scrollRectToVisible:textView.frame animated:YES];
 
