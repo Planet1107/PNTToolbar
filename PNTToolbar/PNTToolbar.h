@@ -4,7 +4,7 @@
 //  Created by Planet 1107
 //
 
-#define KEYBOARD_ANIMATION_DURATION 0.4
+#define KEYBOARD_ANIMATION_DURATION 0.2
 
 #import <UIKit/UIKit.h>
 
