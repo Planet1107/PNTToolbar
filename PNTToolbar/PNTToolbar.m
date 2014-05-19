@@ -1,12 +1,12 @@
 //
-//  PLToolbar.m v1.3
+//  PLToolbar.m
 //
-//  Created by Planet 1107 on 11/4/13.
+//  Created by Planet 1107
 //
 
 #import "PNTToolbar.h"
 
-@interface PNTToolbar ()
+@interface PNTToolbar () <UITextFieldDelegate>
 
 @property (assign, nonatomic) BOOL shouldReturnActivated;
 @property (assign, getter = isKeyboardVisible) BOOL keyboardVisible;
@@ -59,8 +59,8 @@
 - (void)setTextFields:(NSArray *)textFields {
     
     _textFields = textFields;
-    NSMutableArray* delegates = [NSMutableArray array];
-    for (UITextField* textField in textFields) {
+    NSMutableArray *delegates = [NSMutableArray array];
+    for (UITextField *textField in textFields) {
         if (textField.delegate && textField.delegate != self) {
             [delegates addObject:textField.delegate];
         } else {
@@ -75,7 +75,6 @@
 - (void)setMainScrollView:(UIScrollView *)mainScrollView {
     
     _mainScrollView = mainScrollView;
-    //mainScrollViewInitialFrame = mainScrollView.frame;
 }
 
 
@@ -84,7 +83,7 @@
 - (void)resignKeyboard:(id)sender {
     
     [self keyboardWillHide:nil];
-    for (UITextField* textField in self.textFields) {
+    for (UITextField *textField in self.textFields) {
         [textField resignFirstResponder];
     }
 }
@@ -93,10 +92,9 @@
     
     self.keyboardVisible = YES;
     self.shouldReturnActivated = NO;
-    NSDictionary* info = notification.userInfo;
+    NSDictionary *info = notification.userInfo;
     self.keyboardSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
-    
+
     int windowHeight = self.mainScrollView.window.frame.size.height;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         windowHeight = self.mainScrollView.window.frame.size.width;
@@ -112,9 +110,9 @@
         self.mainScrollView.frame = scrollViewFrame;
     } completion:^(BOOL finished) {
         UITextField *textField = nil;
-        for (UIResponder *tf in self.textFields) {
-            if (tf.isFirstResponder) {
-                textField = (UITextField *)tf;
+        for (UIResponder *responder in self.textFields) {
+            if (responder.isFirstResponder) {
+                textField = (UITextField *)responder;
                 break;
             }
         }
@@ -136,7 +134,7 @@
 
 - (void)previousField:(id)sender {
     
-    NSUInteger indexOfActiveTextFiled = [self.textFields indexOfObjectPassingTest:^BOOL(UITextField* textField, NSUInteger idx, BOOL* stop) {
+    NSUInteger indexOfActiveTextFiled = [self.textFields indexOfObjectPassingTest:^BOOL(UITextField *textField, NSUInteger idx, BOOL* stop) {
         return textField.isFirstResponder;
     }];
     if (indexOfActiveTextFiled > 0) {
@@ -146,7 +144,7 @@
 
 - (void)nextField:(id)sender {
     
-    NSUInteger indexOfActiveTextFiled = [self.textFields indexOfObjectPassingTest:^BOOL(UITextField* textField, NSUInteger idx, BOOL* stop) {
+    NSUInteger indexOfActiveTextFiled = [self.textFields indexOfObjectPassingTest:^BOOL(UITextField *textField, NSUInteger idx, BOOL* stop) {
         return textField.isFirstResponder;
     }];
     if (indexOfActiveTextFiled < self.textFields.count-1) {
@@ -275,20 +273,12 @@
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     
-    BOOL shouldEndEditing = NO;
     NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewShouldEndEditing:)]) {
-        shouldEndEditing = [self.delegates[index] textViewShouldEndEditing:textView];
+        return [self.delegates[index] textViewShouldEndEditing:textView];
     } else {
-        shouldEndEditing = YES;
+        return YES;
     }
-    /*
-    if (self.shouldReturnActivated && shouldEndEditing) {
-        [self keyboardWillHide:nil];
-    }
-    self.shouldReturnActivated = NO;
-     */
-    return shouldEndEditing;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
@@ -338,7 +328,6 @@
     CGRect scrollViewFrame = self.mainScrollView.frame;
     int visibleHeight = keyboardInViewPoint.y - CGRectGetMinY(scrollViewFrame);
     
-
     if (rect.size.height > visibleHeight) {
         rect.size.height = visibleHeight - 30;
     }

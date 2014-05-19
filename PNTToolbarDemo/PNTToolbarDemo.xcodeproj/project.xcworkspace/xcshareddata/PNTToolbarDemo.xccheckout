@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6C0AAF04-01FA-457C-9934-491A6E002DC5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PNTToolbarDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>18214297-41E5-40B4-A691-8A40FC5EF278</key>
+		<string>https://github.com/jcavar/PNTToolbar.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PNTToolbarDemo/PNTToolbarDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>18214297-41E5-40B4-A691-8A40FC5EF278</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jcavar/PNTToolbar.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>18214297-41E5-40B4-A691-8A40FC5EF278</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>18214297-41E5-40B4-A691-8A40FC5EF278</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PNTToolbar</string>
+		</dict>
+	</array>
+</dict>
+</plist>
