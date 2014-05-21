@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    //self.automaticallyAdjustsScrollViewInsets = NO;
+
     [self.scrollViewForm addSubview:self.viewContentForm];
     self.scrollViewForm.contentSize = self.viewContentForm.frame.size;
     
@@ -38,6 +38,7 @@
     self.textFieldDatePicker.inputView = self.datePicker;
     
     PNTToolbar *toolbar = [PNTToolbar defaultToolbar];
+    toolbar.navigationButtonsTintColor = [UIColor redColor];
     toolbar.mainScrollView = self.scrollViewForm;
     toolbar.textFields = @[self.textFieldKeyboard, self.textFieldTwo1, self.textFieldTwo2, self.textView, self.textFieldDatePicker, self.textFieldPickerView];
 }
