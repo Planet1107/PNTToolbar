@@ -9,11 +9,12 @@
 @interface PNTToolbar () <UITextFieldDelegate>
 
 @property (assign, nonatomic) BOOL shouldReturnActivated;
-@property (assign, getter = isKeyboardVisible) BOOL keyboardVisible;
+@property (assign, nonatomic) BOOL keyboardVisible;
 
-@property (strong, nonatomic) UIBarButtonItem *previousButton;
-@property (strong, nonatomic) UIBarButtonItem *nextButton;
-@property (strong, nonatomic) UIBarButtonItem *doneButton;
+@property (strong, nonatomic) UIBarButtonItem *barButtonItemPrevious;
+@property (strong, nonatomic) UIBarButtonItem *barButtonItemNext;
+@property (strong, nonatomic) UIBarButtonItem *barButtonItemDone;
+
 @property (assign, nonatomic) CGRect mainScrollViewInitialFrame;
 @property (assign, nonatomic) CGPoint mainScrollViewInitialOffset;
 @property (assign, nonatomic) CGSize keyboardSize;
@@ -28,14 +29,14 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        _previousButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Previous",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(previousField:)] ;
-        _nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(nextField:)];
+        _barButtonItemPrevious = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Previous",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(previousField:)] ;
+        _barButtonItemNext = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(nextField:)];
         UIBarButtonItem *spaceBetweenButtons = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resignKeyboard:)];
+        _barButtonItemDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resignKeyboard:)];
         if (self.shouldHideNavigationButtons) {
-            [self setItems:[NSArray arrayWithObjects:spaceBetweenButtons, _doneButton, nil] ];
+            [self setItems:[NSArray arrayWithObjects:spaceBetweenButtons, _barButtonItemDone, nil] ];
         } else {
-            [self setItems:[NSArray arrayWithObjects:_previousButton, _nextButton, spaceBetweenButtons, _doneButton, nil] ];
+            [self setItems:[NSArray arrayWithObjects:_barButtonItemPrevious, _barButtonItemNext, spaceBetweenButtons, _barButtonItemDone, nil] ];
         }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     }
@@ -78,6 +79,13 @@
     _mainScrollView = mainScrollView;
 }
 
+- (void)setNavigationButtonsTintColor:(UIColor *)navigationButtonsTintColor {
+
+    _navigationButtonsTintColor = navigationButtonsTintColor;
+    self.barButtonItemPrevious.tintColor = navigationButtonsTintColor;
+    self.barButtonItemNext.tintColor = navigationButtonsTintColor;
+    self.barButtonItemDone.tintColor = navigationButtonsTintColor;
+}
 
 #pragma mark - Keyboard methods
 
