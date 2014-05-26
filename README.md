@@ -2,7 +2,7 @@
 
 Simple class which adds Safari like toolbar to keyboard and handles switching between input fields.
 
-![alt preview](https://raw.githubusercontent.com/jcavar/PNTToolbar/master/preview.gif)
+![alt preview](https://raw.githubusercontent.com/Planet1107/PNTToolbar/master/preview.gif)
 
 ##Basic Usage
 
@@ -18,7 +18,7 @@ inputViewToolbar.mainScrollView = self.scrollViewMain;
 
 ```ruby
 platform :ios, '7.0'
-pod 'PNTToolbar', '~> 0.1.3'
+pod 'PNTToolbar', '~> 0.1.4'
 ```
 
 ###Manual
