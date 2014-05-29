@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>6C0AAF04-01FA-457C-9934-491A6E002DC5</string>
+	<string>04FCB82C-F119-4930-B353-7D81620C1DF6</string>
 	<key>IDESourceControlProjectName</key>
 	<string>PNTToolbarDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>18214297-41E5-40B4-A691-8A40FC5EF278</key>
-		<string>https://github.com/jcavar/PNTToolbar.git</string>
+		<key>0850D1DD-C714-4649-AB21-32120314FA6B</key>
+		<string>https://github.com/Planet1107/PNTToolbar.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>PNTToolbarDemo/PNTToolbarDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>18214297-41E5-40B4-A691-8A40FC5EF278</key>
+		<key>0850D1DD-C714-4649-AB21-32120314FA6B</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/jcavar/PNTToolbar.git</string>
+	<string>https://github.com/Planet1107/PNTToolbar.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>18214297-41E5-40B4-A691-8A40FC5EF278</string>
+	<string>0850D1DD-C714-4649-AB21-32120314FA6B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>18214297-41E5-40B4-A691-8A40FC5EF278</string>
+			<string>0850D1DD-C714-4649-AB21-32120314FA6B</string>
 			<key>IDESourceControlWCCName</key>
 			<string>PNTToolbar</string>
 		</dict>

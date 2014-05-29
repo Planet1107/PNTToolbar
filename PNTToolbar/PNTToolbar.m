@@ -125,7 +125,8 @@
                 break;
             }
         }
-        [self scrollRectToVisible:textField.frame animated:YES];
+        CGRect frameToScroll = [self.mainScrollView convertRect:textField.frame fromView:textField.superview];
+        [self scrollRectToVisible:frameToScroll animated:YES];
     }];
     
 }
@@ -171,7 +172,8 @@
         self.mainScrollViewInitialFrame = self.mainScrollView.frame;
         self.mainScrollViewInitialOffset = self.mainScrollView.contentOffset;
     }
-    [self scrollRectToVisible:textField.frame animated:YES];
+    CGRect frameToScroll = [self.mainScrollView convertRect:textField.frame fromView:textField.superview];
+    [self scrollRectToVisible:frameToScroll animated:YES];
 
     NSUInteger index = [self.textFields indexOfObject:textField];
     if ([self.delegates[index] respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
@@ -255,7 +257,8 @@
         self.mainScrollViewInitialFrame = self.mainScrollView.frame;
         self.mainScrollViewInitialOffset = self.mainScrollView.contentOffset;
     }
-    [self scrollRectToVisible:textView.frame animated:YES];
+    CGRect frameToScroll = [self.mainScrollView convertRect:textView.frame fromView:textView.superview];
+    [self scrollRectToVisible:frameToScroll animated:YES];
 
     NSUInteger index = [self.textFields indexOfObject:textView];
     if ([self.delegates[index] respondsToSelector:@selector(textViewDidBeginEditing:)]) {
