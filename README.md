@@ -18,7 +18,7 @@ inputViewToolbar.mainScrollView = self.scrollViewMain;
 
 ```ruby
 platform :ios, '7.0'
-pod 'PNTToolbar', '~> 0.1.5'
+pod 'PNTToolbar', '~> 0.1.6'
 ```
 
 ###Manual
