@@ -39,6 +39,7 @@
             [self setItems:[NSArray arrayWithObjects:_barButtonItemPrevious, _barButtonItemNext, spaceBetweenButtons, _barButtonItemDone, nil] ];
         }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     }
     return self;
 }
@@ -46,6 +47,7 @@
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 + (PNTToolbar *)defaultToolbar {
