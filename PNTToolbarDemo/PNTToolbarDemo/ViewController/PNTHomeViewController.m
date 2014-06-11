@@ -40,7 +40,7 @@
     PNTToolbar *toolbar = [PNTToolbar defaultToolbar];
     toolbar.navigationButtonsTintColor = [UIColor redColor];
     toolbar.mainScrollView = self.scrollViewForm;
-    toolbar.textFields = @[self.textFieldKeyboard, self.textFieldTwo1, self.textFieldTwo2, self.textView, self.textFieldDatePicker, self.textFieldPickerView];
+    toolbar.inputFields = @[self.textFieldKeyboard, self.textFieldTwo1, self.textFieldTwo2, self.textView, self.textFieldDatePicker, self.textFieldPickerView];
 }
 
 - (void)didReceiveMemoryWarning {
