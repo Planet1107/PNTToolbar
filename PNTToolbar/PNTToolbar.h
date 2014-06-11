@@ -4,8 +4,6 @@
 //  Created by Planet 1107
 //
 
-#define TEXT_FIELD_INSET 10
-
 #import <UIKit/UIKit.h>
 
 @interface PNTToolbar : UIToolbar

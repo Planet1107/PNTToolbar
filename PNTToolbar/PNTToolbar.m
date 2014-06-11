@@ -87,6 +87,7 @@
     }
 }
 
+
 #pragma mark - Keyboard methods
 
 - (void)keyboardWillChangeFrame:(NSNotification *)notification {
@@ -102,7 +103,16 @@
     
     [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
         self.mainScrollView.frame = newFrame;
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        NSUInteger indexOfActiveTextFiled = [self.inputFields indexOfObjectPassingTest:^BOOL(UITextField *textField, NSUInteger idx, BOOL* stop) {
+            return textField.isFirstResponder;
+        }];
+        if (indexOfActiveTextFiled != NSNotFound) {
+            UITextField *textField = self.inputFields[indexOfActiveTextFiled];
+            CGRect frameToScroll = [self.mainScrollView convertRect:textField.frame fromView:textField.superview];
+            [self scrollRectToVisible:frameToScroll animated:YES];
+        }
+    }];
 }
 
 
@@ -289,11 +299,14 @@
 }
 
 
-#pragma mark - Other methods and functions
+#pragma mark - Other methods
 
 - (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated {
     
-    [self.mainScrollView scrollRectToVisible:CGRectInset(rect, 0, -TEXT_FIELD_INSET) animated:animated];
+    if (rect.size.height > self.keyboardFrame.origin.y) {
+        rect.size.height = self.keyboardFrame.origin.y;
+    }
+    [self.mainScrollView scrollRectToVisible:rect animated:animated];
 }
 
 @end
