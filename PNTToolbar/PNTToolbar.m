@@ -1,5 +1,5 @@
 //
-//  PLToolbar.m
+//  PNTToolbar.m
 //
 //  Created by Planet 1107
 //
@@ -9,15 +9,12 @@
 @interface PNTToolbar () <UITextFieldDelegate>
 
 @property (assign, nonatomic) BOOL shouldReturnActivated;
-@property (assign, nonatomic) BOOL keyboardVisible;
 
 @property (strong, nonatomic) UIBarButtonItem *barButtonItemPrevious;
 @property (strong, nonatomic) UIBarButtonItem *barButtonItemNext;
 @property (strong, nonatomic) UIBarButtonItem *barButtonItemDone;
 
-@property (assign, nonatomic) CGRect mainScrollViewInitialFrame;
-@property (assign, nonatomic) CGPoint mainScrollViewInitialOffset;
-@property (assign, nonatomic) CGSize keyboardSize;
+@property (assign, nonatomic) CGRect keyboardFrame;
 
 @end
 
@@ -29,25 +26,23 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        _barButtonItemPrevious = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Previous",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(previousField:)] ;
-        _barButtonItemNext = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(nextField:)];
+        _barButtonItemPrevious = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Previous",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(barButtonItemPreviousTouchUpInside:)] ;
+        _barButtonItemNext = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(barButtonItemNextTouchUpInside:)];
         UIBarButtonItem *spaceBetweenButtons = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        _barButtonItemDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resignKeyboard:)];
+        _barButtonItemDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(barButtonItemDoneTouchUpInside:)];
         if (self.shouldHideNavigationButtons) {
-            [self setItems:[NSArray arrayWithObjects:spaceBetweenButtons, _barButtonItemDone, nil] ];
+            self.items = @[spaceBetweenButtons, _barButtonItemDone];
         } else {
-            [self setItems:[NSArray arrayWithObjects:_barButtonItemPrevious, _barButtonItemNext, spaceBetweenButtons, _barButtonItemDone, nil] ];
+            self.items = @[_barButtonItemPrevious, _barButtonItemNext, spaceBetweenButtons, _barButtonItemDone];
         }
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     }
     return self;
 }
 
 - (void)dealloc {
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 + (PNTToolbar *)defaultToolbar {
@@ -76,11 +71,6 @@
     self.delegates = delegates;
 }
 
-- (void)setMainScrollView:(UIScrollView *)mainScrollView {
-    
-    _mainScrollView = mainScrollView;
-}
-
 - (void)setNavigationButtonsTintColor:(UIColor *)navigationButtonsTintColor {
 
     _navigationButtonsTintColor = navigationButtonsTintColor;
@@ -89,63 +79,29 @@
     self.barButtonItemDone.tintColor = navigationButtonsTintColor;
 }
 
+
 #pragma mark - Keyboard methods
 
-- (void)resignKeyboard:(id)sender {
+- (void)keyboardWillChangeFrame:(NSNotification *)notification {
     
-    [self keyboardWillHide:nil];
-    for (UITextField *textField in self.textFields) {
-        [textField resignFirstResponder];
-    }
-}
-
-- (void)keyboardDidShow:(NSNotification *)notification {
+    CGRect keyboardEndFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    self.keyboardFrame = [self.mainScrollView.superview convertRect:keyboardEndFrame fromView:nil];
+    UIViewAnimationCurve curve = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
+    UIViewAnimationOptions options = (curve << 16) | UIViewAnimationOptionBeginFromCurrentState;
+    NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
-    self.keyboardVisible = YES;
-    self.shouldReturnActivated = NO;
-    NSDictionary *info = notification.userInfo;
-    self.keyboardSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-
-    int windowHeight = self.mainScrollView.window.frame.size.height;
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-        windowHeight = self.mainScrollView.window.frame.size.width;
-        self.keyboardSize = CGSizeMake(self.keyboardSize.height, self.keyboardSize.width);
-    }
-    CGPoint keyboardInViewPoint = [self.mainScrollView.superview convertPoint:CGPointMake(0, windowHeight - self.keyboardSize.height) fromView:nil];
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-        keyboardInViewPoint = CGPointMake(keyboardInViewPoint.y, self.mainScrollView.window.frame.size.height - keyboardInViewPoint.x);
-    }
-    CGRect scrollViewFrame = self.mainScrollView.frame;
-    scrollViewFrame.size.height = keyboardInViewPoint.y - CGRectGetMinY(scrollViewFrame);
-    [UIView animateWithDuration:0 animations:^{
-        self.mainScrollView.frame = scrollViewFrame;
-    } completion:^(BOOL finished) {
-        UITextField *textField = nil;
-        for (UIResponder *responder in self.textFields) {
-            if (responder.isFirstResponder) {
-                textField = (UITextField *)responder;
-                break;
-            }
-        }
-        CGRect frameToScroll = [self.mainScrollView convertRect:textField.frame fromView:textField.superview];
-        [self scrollRectToVisible:frameToScroll animated:YES];
-    }];
+    CGRect newFrame = self.mainScrollView.frame;
+    newFrame.size.height = self.keyboardFrame.origin.y;
     
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    
-    [UIView animateWithDuration:KEYBOARD_ANIMATION_DURATION animations:^{
-        self.mainScrollView.frame = self.mainScrollViewInitialFrame;
-        self.mainScrollView.contentOffset = self.mainScrollViewInitialOffset;
-    } ];
-    self.keyboardVisible = NO;
+    [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
+        self.mainScrollView.frame = newFrame;
+    } completion:nil];
 }
 
 
 #pragma mark - Button methods
 
-- (void)previousField:(id)sender {
+- (void)barButtonItemPreviousTouchUpInside:(id)sender {
     
     NSUInteger indexOfActiveTextFiled = [self.textFields indexOfObjectPassingTest:^BOOL(UITextField *textField, NSUInteger idx, BOOL* stop) {
         return textField.isFirstResponder;
@@ -155,7 +111,7 @@
     }
 }
 
-- (void)nextField:(id)sender {
+- (void)barButtonItemNextTouchUpInside:(id)sender {
     
     NSUInteger indexOfActiveTextFiled = [self.textFields indexOfObjectPassingTest:^BOOL(UITextField *textField, NSUInteger idx, BOOL* stop) {
         return textField.isFirstResponder;
@@ -165,15 +121,18 @@
     }
 }
 
+- (void)barButtonItemDoneTouchUpInside:(id)sender {
+    
+    for (UITextField *textField in self.textFields) {
+        [textField resignFirstResponder];
+    }
+}
+
 
 #pragma mark - UITextFieldDelegate methods
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
-    if (!self.keyboardVisible) {
-        self.mainScrollViewInitialFrame = self.mainScrollView.frame;
-        self.mainScrollViewInitialOffset = self.mainScrollView.contentOffset;
-    }
     CGRect frameToScroll = [self.mainScrollView convertRect:textField.frame fromView:textField.superview];
     [self scrollRectToVisible:frameToScroll animated:YES];
 
@@ -221,7 +180,9 @@
         shouldEndEditing = YES;
     }
     if (self.shouldReturnActivated && shouldEndEditing) {
-        [self keyboardWillHide:nil];
+        for (UITextField *textField in self.textFields) {
+            [textField resignFirstResponder];
+        }
     }
     self.shouldReturnActivated = NO;
     return shouldEndEditing;
@@ -255,10 +216,6 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     
-    if (!self.keyboardVisible) {
-        self.mainScrollViewInitialFrame = self.mainScrollView.frame;
-        self.mainScrollViewInitialOffset = self.mainScrollView.contentOffset;
-    }
     CGRect frameToScroll = [self.mainScrollView convertRect:textView.frame fromView:textView.superview];
     [self scrollRectToVisible:frameToScroll animated:YES];
 
@@ -329,26 +286,7 @@
 
 - (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated {
     
-    rect.origin.y -= 5;
-    rect.size.height += 10;
-    
-    
-    int windowHeight = self.mainScrollView.window.frame.size.height;
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-        windowHeight = self.mainScrollView.window.frame.size.width;
-        self.keyboardSize = CGSizeMake(self.keyboardSize.height, self.keyboardSize.width);
-    }
-    CGPoint keyboardInViewPoint = [self.mainScrollView.superview convertPoint:CGPointMake(0, windowHeight - self.keyboardSize.height) fromView:nil];
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-        keyboardInViewPoint = CGPointMake(keyboardInViewPoint.y, self.mainScrollView.window.frame.size.height - keyboardInViewPoint.x);
-    }
-    CGRect scrollViewFrame = self.mainScrollView.frame;
-    int visibleHeight = keyboardInViewPoint.y - CGRectGetMinY(scrollViewFrame);
-    
-    if (rect.size.height > visibleHeight) {
-        rect.size.height = visibleHeight - 30;
-    }
-    [self.mainScrollView scrollRectToVisible:rect animated:animated];
+    [self.mainScrollView scrollRectToVisible:CGRectInset(rect, 0, -TEXT_FIELD_INSET) animated:animated];
 }
 
 @end

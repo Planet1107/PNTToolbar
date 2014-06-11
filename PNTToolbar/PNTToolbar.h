@@ -1,10 +1,10 @@
 //
-//  PLToolbar.h
+//  PNTToolbar.h
 //
 //  Created by Planet 1107
 //
 
-#define KEYBOARD_ANIMATION_DURATION 0.2
+#define TEXT_FIELD_INSET 10
 
 #import <UIKit/UIKit.h>
 
