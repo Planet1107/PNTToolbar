@@ -7,9 +7,9 @@ Simple class which adds Safari like toolbar to keyboard and handles switching be
 ##Basic Usage
 
 ```objective-c
-PNTToolbar *inputViewToolbar = [PNTToolbar defaultToolbar];
-inputViewToolbar.textFields = @[self.textField1, self.textView2, self.textField3, self.textField4, self.textField5];
-inputViewToolbar.mainScrollView = self.scrollViewMain;
+PNTToolbar *toolbar = [PNTToolbar defaultToolbar];
+toolbar.mainScrollView = self.scrollViewForm;
+toolbar.inputFields = @[self.textFieldKeyboard, self.textView, self.textFieldDatePicker, self.textFieldPickerView];
 ```
 
 ##Installation
