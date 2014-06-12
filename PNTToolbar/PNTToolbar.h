@@ -23,14 +23,46 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  `PNTToolbar` is a subclass of `UIToolbar` for better and simpler forms behaviour in `UIScrollView`.
+ */
 @interface PNTToolbar : UIToolbar
 
+/**
+ *  This object is actually scrolled to achive desired behaviour.
+ */
 @property (strong, nonatomic) UIScrollView *mainScrollView;
+
+
+/**
+ *  Array of input fields for which you want to provide Prev, Next, Done behaviour. Input fields are switched from first in this array to last.
+ */
 @property (strong, nonatomic) NSArray *inputFields;
+
+
+/**
+ *  Array of delegates of input fields. `PNTToolbar` provides default behaviour with input fileds. If you still need to do some work in delegate methods, set your delegates here.
+ */
 @property (strong, nonatomic) NSArray *inputFieldsDelegates;
+
+
+/**
+ *  Change default color of buttons in `PNTToolbar`.
+ */
 @property (strong, nonatomic) UIColor *navigationButtonsTintColor;
+
+
+/**
+ *  Hide Prev, Next buttons in navigation. Handy in situation when `PNTToolbar` is `inputAccessoryView` of only one input view.
+ */
 @property (assign, nonatomic) BOOL shouldHideNavigationButtons;
 
+
+/**
+ *  Creates `PNTToolbar` instance
+ *
+ *  @return `PNTToolbar` instance with default settings.
+ */
 + (PNTToolbar *)defaultToolbar;
 
 @end
