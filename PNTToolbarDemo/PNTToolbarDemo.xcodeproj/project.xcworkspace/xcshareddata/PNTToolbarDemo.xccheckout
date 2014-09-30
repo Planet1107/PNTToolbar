@@ -10,29 +10,29 @@
 	<string>PNTToolbarDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>18214297-41E5-40B4-A691-8A40FC5EF278</key>
+		<key>0DBE8BB203DD24C207BC29EFFCD4274CE16C5E23</key>
 		<string>https://github.com/jcavar/PNTToolbar.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>PNTToolbarDemo/PNTToolbarDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>18214297-41E5-40B4-A691-8A40FC5EF278</key>
+		<key>0DBE8BB203DD24C207BC29EFFCD4274CE16C5E23</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/jcavar/PNTToolbar.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>18214297-41E5-40B4-A691-8A40FC5EF278</string>
+	<string>0DBE8BB203DD24C207BC29EFFCD4274CE16C5E23</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>18214297-41E5-40B4-A691-8A40FC5EF278</string>
+			<string>0DBE8BB203DD24C207BC29EFFCD4274CE16C5E23</string>
 			<key>IDESourceControlWCCName</key>
 			<string>PNTToolbar</string>
 		</dict>

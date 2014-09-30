@@ -116,7 +116,7 @@
     NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
     CGRect newFrame = self.mainScrollView.frame;
-    newFrame.size.height = self.keyboardFrame.origin.y;
+    newFrame.size.height = self.keyboardFrame.origin.y - newFrame.origin.y;         
     
     [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
         self.mainScrollView.frame = newFrame;
