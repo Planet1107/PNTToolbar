@@ -97,14 +97,16 @@
 - (void)setShouldReturnActivated:(BOOL)shouldReturnActivated {
 
     _shouldReturnActivated = shouldReturnActivated;
+}
+
+- (void)setShouldHideNavigationButtons:(BOOL)shouldHideNavigationButtons
+{
     if (self.shouldHideNavigationButtons) {
         self.items = @[_barButtonItemSpace, _barButtonItemDone];
     } else {
         self.items = @[_barButtonItemPrevious, _barButtonItemNext, _barButtonItemSpace, _barButtonItemDone];
     }
 }
-
-
 #pragma mark - Keyboard methods
 
 - (void)keyboardWillChangeFrame:(NSNotification *)notification {
